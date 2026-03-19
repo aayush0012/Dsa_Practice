@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DSA Practice – Aayush</title>
+  <style>
+    /* ── Reset & Base ── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0d1117;
+      --surface: #161b22;
+      --border: #30363d;
+      --accent: #58a6ff;
+      --accent-hover: #79c0ff;
+      --text: #e6edf3;
+      --text-muted: #8b949e;
+      --green: #3fb950;
+      --tag-bg: #21262d;
+      --shadow: 0 4px 16px rgba(0,0,0,.45);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { color: var(--accent-hover); text-decoration: underline; }
+
+    /* ── Header ── */
+    header {
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      padding: 1.5rem 2rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    header .logo {
+      width: 44px;
+      height: 44px;
+      background: var(--accent);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.4rem;
+      flex-shrink: 0;
+    }
+
+    header h1 {
+      font-size: 1.4rem;
+      font-weight: 600;
+    }
+
+    header p {
+      color: var(--text-muted);
+      font-size: 0.875rem;
+    }
+
+    /* ── Hero ── */
+    .hero {
+      text-align: center;
+      padding: 4rem 2rem 3rem;
+      max-width: 760px;
+      margin: 0 auto;
+    }
+
+    .hero h2 {
+      font-size: 2.4rem;
+      font-weight: 700;
+      background: linear-gradient(135deg, var(--accent) 0%, #bc8cff 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 1rem;
+    }
+
+    .hero p {
+      color: var(--text-muted);
+      font-size: 1.05rem;
+      max-width: 580px;
+      margin: 0 auto 2rem;
+    }
+
+    .badge-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: .5rem;
+      justify-content: center;
+    }
+
+    .badge {
+      background: var(--tag-bg);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: .3rem .85rem;
+      font-size: .8rem;
+      color: var(--text-muted);
+    }
+
+    .badge.green { border-color: var(--green); color: var(--green); }
+    .badge.blue  { border-color: var(--accent); color: var(--accent); }
+
+    /* ── Stats ── */
+    .stats {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      justify-content: center;
+      padding: 0 2rem 3rem;
+    }
+
+    .stat-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.2rem 2rem;
+      text-align: center;
+      min-width: 130px;
+    }
+
+    .stat-card .num {
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--accent);
+    }
+
+    .stat-card .label {
+      font-size: .8rem;
+      color: var(--text-muted);
+      margin-top: .2rem;
+    }
+
+    /* ── Main Grid ── */
+    main {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 2rem 4rem;
+    }
+
+    .section-title {
+      font-size: 1.25rem;
+      font-weight: 600;
+      margin-bottom: 1.25rem;
+      padding-bottom: .5rem;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: .5rem;
+    }
+
+    .topic-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
+      gap: 1.25rem;
+      margin-bottom: 3rem;
+    }
+
+    /* ── Topic Card ── */
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.25rem 1.4rem;
+      transition: border-color .2s, box-shadow .2s, transform .15s;
+    }
+
+    .card:hover {
+      border-color: var(--accent);
+      box-shadow: var(--shadow);
+      transform: translateY(-2px);
+    }
+
+    .card-header {
+      display: flex;
+      align-items: center;
+      gap: .75rem;
+      margin-bottom: 1rem;
+    }
+
+    .card-icon {
+      font-size: 1.5rem;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--tag-bg);
+      border-radius: 8px;
+      flex-shrink: 0;
+    }
+
+    .card-title { font-size: 1rem; font-weight: 600; }
+    .card-count { font-size: .78rem; color: var(--text-muted); }
+
+    .problem-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: .45rem;
+    }
+
+    .problem-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: .5rem;
+      font-size: .875rem;
+      color: var(--text-muted);
+    }
+
+    .problem-list li::before {
+      content: "›";
+      color: var(--accent);
+      font-weight: 700;
+      flex-shrink: 0;
+      margin-top: .05rem;
+    }
+
+    .tag {
+      font-size: .7rem;
+      padding: .15rem .55rem;
+      border-radius: 4px;
+      background: var(--tag-bg);
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    /* ── Footer ── */
+    footer {
+      text-align: center;
+      padding: 2rem;
+      border-top: 1px solid var(--border);
+      color: var(--text-muted);
+      font-size: .85rem;
+    }
+
+    footer a { color: var(--accent); }
+
+    /* ── Responsive ── */
+    @media (max-width: 600px) {
+      .hero h2 { font-size: 1.75rem; }
+      header { flex-direction: column; align-items: flex-start; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header>
+    <div class="logo">🧠</div>
+    <div>
+      <h1>DSA Practice</h1>
+      <p>aayush0012 / Dsa_Practice</p>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section class="hero">
+    <h2>Data Structures &amp; Algorithms</h2>
+    <p>
+      A curated collection of DSA problems solved in C++ — covering Trees, Graphs,
+      Dynamic Programming, Recursion &amp; Backtracking, and Stack &amp; Queues.
+    </p>
+    <div class="badge-row">
+      <span class="badge blue">C++</span>
+      <span class="badge green">Interview Prep</span>
+      <span class="badge">Ongoing</span>
+      <span class="badge">Competitive Programming</span>
+    </div>
+  </section>
+
+  <!-- Stats -->
+  <div class="stats">
+    <div class="stat-card">
+      <div class="num">30</div>
+      <div class="label">Solutions</div>
+    </div>
+    <div class="stat-card">
+      <div class="num">5</div>
+      <div class="label">Topics</div>
+    </div>
+    <div class="stat-card">
+      <div class="num">21</div>
+      <div class="label">Tree Problems</div>
+    </div>
+    <div class="stat-card">
+      <div class="num">C++</div>
+      <div class="label">Language</div>
+    </div>
+  </div>
+
+  <!-- Topic Cards -->
+  <main>
+    <div class="section-title">📚 Topics Covered</div>
+
+    <div class="topic-grid">
+
+      <!-- Trees -->
+      <div class="card">
+        <div class="card-header">
+          <div class="card-icon">🌳</div>
+          <div>
+            <div class="card-title">Trees</div>
+            <div class="card-count">21 problems</div>
+          </div>
+        </div>
+        <ul class="problem-list">
+          <li>Bottom View &amp; Top View</li>
+          <li>Left View &amp; Right View</li>
+          <li>Diagonal Traversal</li>
+          <li>Vertical Traversal</li>
+          <li>Zig-Zag (Level Order) Traversal</li>
+          <li>Tree from Inorder + Preorder</li>
+          <li>Tree from Inorder + Postorder</li>
+          <li>Insert &amp; Delete in BST</li>
+          <li>Validate BST</li>
+          <li>LCA in Binary Tree &amp; BST</li>
+          <li>Flatten Binary Tree to Linked List</li>
+          <li>Boundary Traversal</li>
+          <li>Min Time to Burn Tree</li>
+          <li>Sum on Longest Path</li>
+          <li>K-Sum Paths (Prefix Sum)</li>
+        </ul>
+      </div>
+
+      <!-- Graphs -->
+      <div class="card">
+        <div class="card-header">
+          <div class="card-icon">🕸️</div>
+          <div>
+            <div class="card-title">Graphs</div>
+            <div class="card-count">4 problems</div>
+          </div>
+        </div>
+        <ul class="problem-list">
+          <li>BFS – Breadth-First Search <span class="tag">Queue</span></li>
+          <li>DFS – Depth-First Search <span class="tag">Recursion</span></li>
+          <li>Cycle Detection (Undirected) <span class="tag">BFS</span></li>
+          <li>Cycle Detection (Directed) <span class="tag">DFS Stack</span></li>
+        </ul>
+      </div>
+
+      <!-- Dynamic Programming -->
+      <div class="card">
+        <div class="card-header">
+          <div class="card-icon">⚡</div>
+          <div>
+            <div class="card-title">Dynamic Programming</div>
+            <div class="card-count">2 approaches</div>
+          </div>
+        </div>
+        <ul class="problem-list">
+          <li>Fibonacci – Top-Down (Memoization) <span class="tag">DP</span></li>
+          <li>Fibonacci – Bottom-Up (Tabulation) <span class="tag">DP</span></li>
+        </ul>
+      </div>
+
+      <!-- Recursion & Backtracking -->
+      <div class="card">
+        <div class="card-header">
+          <div class="card-icon">🔄</div>
+          <div>
+            <div class="card-title">Recursion &amp; Backtracking</div>
+            <div class="card-count">2 problems</div>
+          </div>
+        </div>
+        <ul class="problem-list">
+          <li>Combination Sum <span class="tag">Backtracking</span></li>
+          <li>Generate All Binary Strings <span class="tag">Recursion</span></li>
+        </ul>
+      </div>
+
+      <!-- Stack & Queues -->
+      <div class="card">
+        <div class="card-header">
+          <div class="card-icon">📦</div>
+          <div>
+            <div class="card-title">Stack &amp; Queues</div>
+            <div class="card-count">2 problems</div>
+          </div>
+        </div>
+        <ul class="problem-list">
+          <li>Next Smaller Element <span class="tag">Monotonic Stack</span></li>
+          <li>Largest Rectangle in Histogram <span class="tag">Stack</span></li>
+        </ul>
+      </div>
+
+    </div><!-- /topic-grid -->
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <p>
+      Built by <a href="https://github.com/aayush0012" target="_blank" rel="noopener">aayush0012</a> ·
+      <a href="https://github.com/aayush0012/Dsa_Practice" target="_blank" rel="noopener">View on GitHub</a>
+    </p>
+  </footer>
+
+</body>
+</html>
