@@ -65,7 +65,7 @@ vector<int> dijkstra(vector<vector<int>> &vec, int vertices, int edges, int sour
 
     while(!pq.empty()){
         int weight = pq.top().first;
-        int u = pq.top().second;
+        int u = pq.top().second;            
         pq.pop();
 
         for(auto it : adj[u]){
