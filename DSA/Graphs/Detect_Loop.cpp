@@ -4,6 +4,7 @@
 #include<queue>
 #include <bits/stdc++.h>
 using namespace std;
+// base concept ->  agr ke node already visited h and uska parent diff h from current node then usko hum ek loop consider krenge 
 bool check(map<int,vector<int>>&adj , int node , map<int,bool> &visited){
     map<int,int>parent; 
     queue<int>q;
