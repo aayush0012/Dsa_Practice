@@ -68,6 +68,8 @@
 
     Monotonic stack is used because every element is pushed
     and popped at most once.
+    PATTERN -> WE CAN FIND CONTRIBUTION OF EACH ELEMENT EITHER MIN OR MAX OR BOTH
+    IF WE ARE ASKED TO FIND MAX WE CAN USE NEXT GREATER AND PREVIOUS GREATER ELEMENT CONCEPT 
 */
 
 class Solution {
@@ -81,11 +83,8 @@ const long long mod = 1e9+7;
         st.push(n-1); 
 
         for(int i = n-2; i>=0; i--){
-
             bool a = false;
-
             while(!st.empty()){
-
                 int first = st.top(); 
 
                 if(nums2[first] < nums2[i]){
